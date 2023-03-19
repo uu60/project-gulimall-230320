@@ -13,6 +13,9 @@
   <artifactId>project-gulimall-230320</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <modules>
+    <module>gulimall-common</module>
+  </modules>
 
   <properties>
     <java.version>1.8</java.version>
