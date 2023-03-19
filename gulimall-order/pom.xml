@@ -8,10 +8,10 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>com.octopus.gulimall</groupId>
-	<artifactId>gulimall-ware</artifactId>
+	<artifactId>gulimall-order</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gulimall-ware</name>
-	<description>gulimall-ware</description>
+	<name>gulimall-order</name>
+	<description>gulimall-order</description>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
