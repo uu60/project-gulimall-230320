@@ -1,16 +1,24 @@
 spring:
+  application:
+    name: gulimall-member
   datasource:
     username: root
     password: 4124894
     url: jdbc:mysql://172.16.212.10:3306/gulimall_ums
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
 
 mybatis-plus:
-  # classpath*??????????????*????????
+  # classpath*表示包括所有依赖包的类路径
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
-      # ??????
+      # 设置@TableId主键默认自增
       id-type: auto
 
 server:

@@ -1,9 +1,17 @@
 spring:
+  application:
+    name: gulimall-product
   datasource:
     username: root
     password: 4124894
     url: jdbc:mysql://172.16.212.10:3306/gulimall_pms
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
 
 mybatis-plus:
   # classpath*表示包括依赖包的类路径，不加*表示只扫描自己的

@@ -33,3 +33,5 @@ build/
 .vscode/
 .mvn/
 **/node_modules
+**/nacos/data
+**/nacos/logs
