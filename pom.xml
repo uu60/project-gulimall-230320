@@ -10,7 +10,7 @@
   </parent>
 
   <groupId>com.octopus</groupId>
-  <artifactId>gulimall-230320</artifactId>
+  <artifactId>project-gulimall-230320</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
