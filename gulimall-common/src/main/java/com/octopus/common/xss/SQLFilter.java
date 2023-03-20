@@ -8,7 +8,7 @@
 
 package com.octopus.common.xss;
 
-import com.octopus.common.exception.RRException;
+import com.octopus.common.utils.RRException;
 import org.apache.commons.lang.StringUtils;
 
 /**

@@ -1,4 +1,4 @@
-package com.octopus.common.exception;
+package com.octopus.common.utils;
 
 /**
  * 自定义异常
