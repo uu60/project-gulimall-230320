@@ -34,4 +34,4 @@ build/
 .mvn/
 **/node_modules
 **/nacos/data
-**/nacos/logs
+**/nacos/**/logs
