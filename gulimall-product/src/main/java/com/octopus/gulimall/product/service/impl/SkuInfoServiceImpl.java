@@ -33,8 +33,6 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     private SpuInfoDescService spuInfoDescService;
     @Autowired
     private AttrGroupService attrGroupService;
-    @Autowired
-    private ThreadPoolExecutor executor;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -94,38 +92,5 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     public List<SkuInfoEntity> getSkusBySpuId(Long spuId) {
         List<SkuInfoEntity> list = this.list(new QueryWrapper<SkuInfoEntity>().eq("spu_id", spuId));
         return list;
-    }
-
-    @Override
-    // TODO: p210
-    public SkuItemVo item(Long skuId) {
-        SkuItemVo skuItemVo = new SkuItemVo();
-
-        CompletableFuture<SkuInfoEntity> infoFuture = CompletableFuture.supplyAsync(() -> {
-            // sku基本信息
-            SkuInfoEntity info = getById(skuId);
-            skuItemVo.setInfo(info);
-            return info;
-        }, executor);
-
-        infoFuture.thenAcceptAsync((res) -> {
-            // 获取spu的销售属性组合
-            SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(res.getSpuId());
-            skuItemVo.setDesp(spuInfoDescEntity);
-        }, executor);
-
-       /* Long catalogId = info.getCatalogId();
-        Long spuId = info.getSpuId();
-
-
-        // sku图片信息
-        List<SkuImagesEntity> imagesEntities = imagesService.getImagesBySkuId(skuId);
-        skuItemVo.setImages(imagesEntities);
-
-        // 获取spu的规格参数信息
-        List<SkuItemVo.SpuItemAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
-        skuItemVo.setGroupAttrs(attrGroupVos);*/
-
-        return null;
     }
 }

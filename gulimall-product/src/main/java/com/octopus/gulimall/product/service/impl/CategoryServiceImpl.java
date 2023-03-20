@@ -12,14 +12,10 @@ import com.octopus.gulimall.product.entity.CategoryEntity;
 import com.octopus.gulimall.product.service.CategoryBrandRelationService;
 import com.octopus.gulimall.product.service.CategoryService;
 import com.octopus.gulimall.product.vo.Catalog2Vo;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -34,11 +30,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-    @Autowired
-    private RedissonClient redisson;
-
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CategoryEntity> page = this.page(new Query<CategoryEntity>().getPage(params),
@@ -134,74 +125,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }));
     }
 
-    @Deprecated
-    public Map<String, List<Catalog2Vo>> getCatalogJson1() {
-        // 加入缓存
-        /*
-          空结果缓存：解决缓存穿透
-          设置过期时间（加随机值）：解决缓存雪崩
-          加锁：解决缓存击穿
-         */
-        String catalogJson = redisTemplate.opsForValue().get("catalogJson");
-        if (!StringUtils.hasText(catalogJson)) {
-            // 缓存没有，查询数据库
-            return getCatalogJsonWithRedissonLock();
-        }
-        return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
-        });
-    }
-
-    @Deprecated
-    private Map<String, List<Catalog2Vo>> getCatalogJsonWithRedissonLock() {
-        // 1. 占分布式锁
-        RLock lock = redisson.getLock("catalogJson-lock");
-        try {
-            lock.lock();
-            // 加锁成功
-            String catalogJson = redisTemplate.opsForValue().get("catalogJson");
-            if (StringUtils.hasText(catalogJson)) {
-                return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
-                });
-            }
-            return getCatalogJsonFromDb();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @Deprecated
-    private Map<String, List<Catalog2Vo>> getCatalogJsonWithRedisLock() {
-        // 1. 占分布式锁
-        String uuid = UUID.randomUUID().toString();
-        while (true) {
-            Boolean locked = redisTemplate.opsForValue().setIfAbsent("lock", uuid, 300, TimeUnit.SECONDS);
-            if (Boolean.TRUE.equals(locked)) {
-                try {
-                    // 加锁成功
-                    String catalogJson = redisTemplate.opsForValue().get("catalogJson");
-                    if (StringUtils.hasText(catalogJson)) {
-                        return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
-                        });
-                    }
-                    return getCatalogJsonFromDb();
-                } finally {
-                    // lua脚本解锁
-                    String script = "if redis.call(\"get\", KEYS[1]) == ARGV[1]" +
-                            "\nthen" +
-                            "\n   return redis.call(\"del\", KEYS[1])" +
-                            "\nelse" +
-                            "\n   return 0" +
-                            "\nend";
-                    redisTemplate.execute(new DefaultRedisScript<>(script, Integer.class),
-                            Collections.singletonList("lock"), uuid);
-                }
-            }
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException ignored) {
-            }
-        }
-    }
 
     private Map<String, List<Catalog2Vo>> getCatalogJsonFromDb() {
     /*
@@ -238,21 +161,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                     return catalog2Vos;
                 }));
         // 查到的数据再放入缓存，将查出的对象转为JSON
-        redisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(collect), 1, TimeUnit.DAYS);
+//        redisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(collect), 1, TimeUnit.DAYS);
         return collect;
-    }
-
-    @Deprecated
-    private synchronized Map<String, List<Catalog2Vo>> getCatalogJsonWithLocalLock() {
-        String catalogJson = redisTemplate.opsForValue().get("catalogJson");
-        if (StringUtils.hasText(catalogJson)) {
-            return JSON.parseObject(catalogJson, new TypeReference<Map<String, List<Catalog2Vo>>>() {
-            });
-        }
-        /*
-          将数据库的多次查询变为一次
-         */
-        return getCatalogJsonFromDb();
     }
 
     private List<CategoryEntity> getChildren(List<CategoryEntity> selectList, Long parentCid) {
