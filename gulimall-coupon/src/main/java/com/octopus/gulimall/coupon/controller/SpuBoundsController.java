@@ -1,28 +1,23 @@
 package com.octopus.gulimall.coupon.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.octopus.gulimall.coupon.entity.SpuBoundsEntity;
-import com.octopus.gulimall.coupon.service.SpuBoundsService;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.common.utils.R;
+import com.octopus.gulimall.coupon.entity.SpuBoundsEntity;
+import com.octopus.gulimall.coupon.service.SpuBoundsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
 /**
  * 商品spu积分设置
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 02:08:49
+ * @date 2022-09-22 15:26:00
  */
 @RestController
 @RequestMapping("coupon/spubounds")
@@ -34,7 +29,7 @@ public class SpuBoundsController {
      * 列表
      */
     @RequestMapping("/list")
-    // @RequiresPermissions("coupon:spubounds:list")
+    //@RequiresPermissions("coupon:spubounds:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuBoundsService.queryPage(params);
 
@@ -46,7 +41,7 @@ public class SpuBoundsController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    // @RequiresPermissions("coupon:spubounds:info")
+    //@RequiresPermissions("coupon:spubounds:info")
     public R info(@PathVariable("id") Long id){
 		SpuBoundsEntity spuBounds = spuBoundsService.getById(id);
 
@@ -56,8 +51,8 @@ public class SpuBoundsController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
-    // @RequiresPermissions("coupon:spubounds:save")
+    @PostMapping ("/save")
+    //@RequiresPermissions("coupon:spubounds:save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
 		spuBoundsService.save(spuBounds);
 
@@ -68,7 +63,7 @@ public class SpuBoundsController {
      * 修改
      */
     @RequestMapping("/update")
-    // @RequiresPermissions("coupon:spubounds:update")
+    //@RequiresPermissions("coupon:spubounds:update")
     public R update(@RequestBody SpuBoundsEntity spuBounds){
 		spuBoundsService.updateById(spuBounds);
 
@@ -79,7 +74,7 @@ public class SpuBoundsController {
      * 删除
      */
     @RequestMapping("/delete")
-    // @RequiresPermissions("coupon:spubounds:delete")
+    //@RequiresPermissions("coupon:spubounds:delete")
     public R delete(@RequestBody Long[] ids){
 		spuBoundsService.removeByIds(Arrays.asList(ids));
 

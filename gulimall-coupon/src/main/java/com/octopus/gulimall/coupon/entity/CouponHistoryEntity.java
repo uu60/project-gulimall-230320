@@ -2,17 +2,17 @@ package com.octopus.gulimall.coupon.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 优惠券领取历史记录
  * 
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 02:08:49
+ * @date 2022-09-22 15:26:00
  */
 @Data
 @TableName("sms_coupon_history")

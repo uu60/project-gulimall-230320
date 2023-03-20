@@ -1,28 +1,23 @@
 package com.octopus.gulimall.member.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.octopus.gulimall.member.entity.MemberLevelEntity;
-import com.octopus.gulimall.member.service.MemberLevelService;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.common.utils.R;
+import com.octopus.gulimall.member.entity.MemberLevelEntity;
+import com.octopus.gulimall.member.service.MemberLevelService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
 /**
  * 会员等级
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 02:12:12
+ * @date 2022-09-22 15:35:45
  */
 @RestController
 @RequestMapping("member/memberlevel")
@@ -34,7 +29,7 @@ public class MemberLevelController {
      * 列表
      */
     @RequestMapping("/list")
-    // @RequiresPermissions("member:memberlevel:list")
+    //@RequiresPermissions("member:memberlevel:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = memberLevelService.queryPage(params);
 
@@ -46,7 +41,7 @@ public class MemberLevelController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    // @RequiresPermissions("member:memberlevel:info")
+    //@RequiresPermissions("member:memberlevel:info")
     public R info(@PathVariable("id") Long id){
 		MemberLevelEntity memberLevel = memberLevelService.getById(id);
 
@@ -57,7 +52,7 @@ public class MemberLevelController {
      * 保存
      */
     @RequestMapping("/save")
-    // @RequiresPermissions("member:memberlevel:save")
+    //@RequiresPermissions("member:memberlevel:save")
     public R save(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.save(memberLevel);
 
@@ -68,7 +63,7 @@ public class MemberLevelController {
      * 修改
      */
     @RequestMapping("/update")
-    // @RequiresPermissions("member:memberlevel:update")
+    //@RequiresPermissions("member:memberlevel:update")
     public R update(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.updateById(memberLevel);
 
@@ -79,7 +74,7 @@ public class MemberLevelController {
      * 删除
      */
     @RequestMapping("/delete")
-    // @RequiresPermissions("member:memberlevel:delete")
+    //@RequiresPermissions("member:memberlevel:delete")
     public R delete(@RequestBody Long[] ids){
 		memberLevelService.removeByIds(Arrays.asList(ids));
 

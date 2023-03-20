@@ -9,9 +9,9 @@ import java.util.Map;
 /**
  * 商品评价回复关系
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 01:34:58
+ * @date 2022-09-22 14:20:10
  */
 public interface CommentReplayService extends IService<CommentReplayEntity> {
 

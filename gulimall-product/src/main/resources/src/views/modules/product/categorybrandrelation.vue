@@ -35,7 +35,7 @@
         label="品牌id">
       </el-table-column>
       <el-table-column
-        prop="categoryId"
+        prop="catalogId"
         header-align="center"
         align="center"
         label="分类id">
@@ -47,7 +47,7 @@
         label="">
       </el-table-column>
       <el-table-column
-        prop="categoryName"
+        prop="catalogName"
         header-align="center"
         align="center"
         label="">
@@ -79,8 +79,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './categorybrandrelation-add-or-update'
-  export default {
+import AddOrUpdate from './categorybrandrelation-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

@@ -3,18 +3,27 @@ package com.octopus.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.gulimall.product.entity.AttrGroupEntity;
+import com.octopus.gulimall.product.vo.AttrGroupWithAttrsVo;
+import com.octopus.gulimall.product.vo.SkuItemVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * 属性分组
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 01:34:57
+ * @date 2022-09-22 14:20:10
  */
 public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    PageUtils queryPage(Map<String, Object> params, Long catalogId);
+
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatalogId(Long catalogId);
+
+    List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId);
 }
 

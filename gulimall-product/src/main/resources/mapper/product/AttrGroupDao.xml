@@ -10,8 +10,12 @@
         <result property="sort" column="sort"/>
         <result property="descript" column="descript"/>
         <result property="icon" column="icon"/>
-        <result property="categoryId" column="category_id"/>
+        <result property="catalogId" column="catalog_id"/>
     </resultMap>
+
+    <select id="getAttrGroupWithAttrsBySpuId">
+
+    </select>
 
 
 </mapper>

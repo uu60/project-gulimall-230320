@@ -73,8 +73,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './attrattrgrouprelation-add-or-update'
-  export default {
+import AddOrUpdate from './attrattrgrouprelation-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

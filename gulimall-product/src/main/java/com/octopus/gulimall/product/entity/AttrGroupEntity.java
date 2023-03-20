@@ -1,18 +1,18 @@
 package com.octopus.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 属性分组
  * 
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 01:34:57
+ * @date 2022-09-22 14:20:10
  */
 @Data
 @TableName("pms_attr_group")
@@ -43,6 +43,10 @@ public class AttrGroupEntity implements Serializable {
 	/**
 	 * 所属分类id
 	 */
-	private Long categoryId;
-
+	private Long catalogId;
+	/**
+	 *
+	 */
+	@TableField(exist = false)
+	private Long[] catalogPath;
 }

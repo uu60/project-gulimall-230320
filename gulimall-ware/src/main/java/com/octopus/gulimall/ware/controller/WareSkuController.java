@@ -1,28 +1,25 @@
 package com.octopus.gulimall.ware.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.octopus.gulimall.ware.entity.WareSkuEntity;
-import com.octopus.gulimall.ware.service.WareSkuService;
+import com.octopus.common.to.SkuHasStockVo;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.common.utils.R;
+import com.octopus.gulimall.ware.entity.WareSkuEntity;
+import com.octopus.gulimall.ware.service.WareSkuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 
 
 /**
  * 商品库存
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 02:13:16
+ * @date 2022-09-22 15:39:28
  */
 @RestController
 @RequestMapping("ware/waresku")
@@ -31,10 +28,21 @@ public class WareSkuController {
     private WareSkuService wareSkuService;
 
     /**
+     * 查询sku是否有库存
+     * @return
+     */
+    @PostMapping("/hasstock")
+    public R getSkusHasStock(@RequestBody List<Long> skuIds) {
+
+        List<SkuHasStockVo> vos = wareSkuService.getSkusHasStock(skuIds);
+        return R.ok().put("data", vos);
+    }
+
+    /**
      * 列表
      */
     @RequestMapping("/list")
-    // @RequiresPermissions("ware:waresku:list")
+    //@RequiresPermissions("ware:waresku:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = wareSkuService.queryPage(params);
 
@@ -46,7 +54,7 @@ public class WareSkuController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    // @RequiresPermissions("ware:waresku:info")
+    //@RequiresPermissions("ware:waresku:info")
     public R info(@PathVariable("id") Long id){
 		WareSkuEntity wareSku = wareSkuService.getById(id);
 
@@ -57,7 +65,7 @@ public class WareSkuController {
      * 保存
      */
     @RequestMapping("/save")
-    // @RequiresPermissions("ware:waresku:save")
+    //@RequiresPermissions("ware:waresku:save")
     public R save(@RequestBody WareSkuEntity wareSku){
 		wareSkuService.save(wareSku);
 
@@ -68,7 +76,7 @@ public class WareSkuController {
      * 修改
      */
     @RequestMapping("/update")
-    // @RequiresPermissions("ware:waresku:update")
+    //@RequiresPermissions("ware:waresku:update")
     public R update(@RequestBody WareSkuEntity wareSku){
 		wareSkuService.updateById(wareSku);
 
@@ -79,7 +87,7 @@ public class WareSkuController {
      * 删除
      */
     @RequestMapping("/delete")
-    // @RequiresPermissions("ware:waresku:delete")
+    //@RequiresPermissions("ware:waresku:delete")
     public R delete(@RequestBody Long[] ids){
 		wareSkuService.removeByIds(Arrays.asList(ids));
 

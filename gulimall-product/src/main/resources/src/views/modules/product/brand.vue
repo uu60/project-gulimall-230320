@@ -91,8 +91,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './brand-add-or-update'
-  export default {
+import AddOrUpdate from './brand-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

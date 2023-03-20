@@ -53,7 +53,7 @@
         label="组图标">
       </el-table-column>
       <el-table-column
-        prop="categoryId"
+        prop="catalogId"
         header-align="center"
         align="center"
         label="所属分类id">
@@ -85,8 +85,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './attrgroup-add-or-update'
-  export default {
+import AddOrUpdate from './attrgroup-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

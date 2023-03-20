@@ -2,18 +2,17 @@ package com.octopus.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * sku信息
  * 
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 01:34:58
+ * @date 2022-09-22 14:20:10
  */
 @Data
 @TableName("pms_sku_info")

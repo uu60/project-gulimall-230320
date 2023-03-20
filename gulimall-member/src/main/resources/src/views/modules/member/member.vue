@@ -157,8 +157,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './member-add-or-update'
-  export default {
+import AddOrUpdate from './member-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

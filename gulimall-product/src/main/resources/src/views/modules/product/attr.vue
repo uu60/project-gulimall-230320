@@ -65,7 +65,7 @@
         label="启用状态[0 - 禁用，1 - 启用]">
       </el-table-column>
       <el-table-column
-        prop="categoryId"
+        prop="catalogId"
         header-align="center"
         align="center"
         label="所属分类">
@@ -103,8 +103,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './attr-add-or-update'
-  export default {
+import AddOrUpdate from './attr-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

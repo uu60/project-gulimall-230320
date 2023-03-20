@@ -61,8 +61,9 @@
 </template>
 
 <script>
-  import AddOrUpdate from './spuinfodesc-add-or-update'
-  export default {
+import AddOrUpdate from './spuinfodesc-add-or-update'
+
+export default {
     data () {
       return {
         dataForm: {

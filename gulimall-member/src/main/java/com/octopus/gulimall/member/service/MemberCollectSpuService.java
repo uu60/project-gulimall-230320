@@ -9,9 +9,9 @@ import java.util.Map;
 /**
  * 会员收藏的商品
  *
- * @author octopus
+ * @author djz
  * @email djz6660@icloud.com
- * @date 2023-03-20 02:12:12
+ * @date 2022-09-22 15:35:45
  */
 public interface MemberCollectSpuService extends IService<MemberCollectSpuEntity> {
 
