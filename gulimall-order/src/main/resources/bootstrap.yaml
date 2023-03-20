@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: gulimall-order
   datasource:
@@ -12,12 +14,11 @@ spring:
         server-addr: localhost:8848
       config:
         server-addr: localhost:8848
+        namespace: 6ceb3358-4332-4045-abac-b4abac4dfdf3
+        file-extension: yaml
+        extension-configs:
+          - data-id: datasource.yaml
+            refresh: true
+          - data-id: mybatis.yaml
+            refresh: true
 
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
-  global-config:
-    db-config:
-      id-type: auto
-
-server:
-  port: 9000

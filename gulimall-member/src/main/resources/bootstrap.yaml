@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gulimall-member
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        namespace: b4085669-f10f-450a-b248-96087afb47d2
+        file-extension: yaml
+        extension-configs:
+          - data-id: datasource.yaml
+            refresh: true
+          - data-id: mybatis.yaml
+            refresh: true
+
+
+
