@@ -9,17 +9,17 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Catalog2Vo {
-    private String catalog1Id; // 1级父节点id
-    private List<Object> catalog3List; // 3级子分类
+public class Category2Vo {
+    private String category1Id; // 1级父节点id
+    private List<Object> category3List; // 3级子分类
     private String id;
     private String name;
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Catalog3Vo {
-        private String catalog2Id;
+    public static class Category3Vo {
+        private String category2Id;
         private String id;
         private String name;
     }
