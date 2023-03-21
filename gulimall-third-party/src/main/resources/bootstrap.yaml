@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gulimall-third-party
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        namespace: 68ab8ba5-f34a-43a5-bd20-b66cac5edc39
+        file-extension: yaml
