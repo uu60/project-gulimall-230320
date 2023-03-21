@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       spuId: "",
-      catalogId: "",
+      categoryId: "",
       dataResp: {
         //后台返回的所有数据
         attrGroups: [],
@@ -90,14 +90,14 @@ export default {
     },
     getQueryParams() {
       this.spuId = this.$route.query.spuId;
-      this.catalogId = this.$route.query.catalogId;
-      console.log("----", this.spuId, this.catalogId);
+      this.categoryId = this.$route.query.categoryId;
+      console.log("----", this.spuId, this.categoryId);
     },
     showBaseAttrs() {
       let _this = this;
       this.$http({
         url: this.$http.adornUrl(
-          `/product/attrgroup/${this.catalogId}/withattr`
+          `/product/attrgroup/${this.categoryId}/withattr`
         ),
         method: "get",
         params: this.$http.adornParams({})
@@ -180,7 +180,7 @@ export default {
   activated() {
     this.clearData();
     this.getQueryParams();
-    if (this.spuId && this.catalogId) {
+    if (this.spuId && this.categoryId) {
       this.showBaseAttrs();
       this.getSpuBaseAttrs();
     }

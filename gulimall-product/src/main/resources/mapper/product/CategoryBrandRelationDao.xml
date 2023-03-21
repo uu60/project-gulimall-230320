@@ -7,12 +7,12 @@
     <resultMap type="com.octopus.gulimall.product.entity.CategoryBrandRelationEntity" id="categoryBrandRelationMap">
         <result property="id" column="id"/>
         <result property="brandId" column="brand_id"/>
-        <result property="catalogId" column="catalog_id"/>
+        <result property="categoryId" column="category_id"/>
         <result property="brandName" column="brand_name"/>
-        <result property="catalogName" column="catalog_name"/>
+        <result property="categoryName" column="category_name"/>
     </resultMap>
     <update id="updateCategory">
-        update `pms_category_brand_relation` set catalog_name = #{name} where catalog_id = #{catId};
+        update `pms_category_brand_relation` set category_name = #{name} where category_id = #{catId};
     </update>
 
 

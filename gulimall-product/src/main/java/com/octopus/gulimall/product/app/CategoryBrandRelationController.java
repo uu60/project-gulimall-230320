@@ -32,7 +32,7 @@ public class CategoryBrandRelationController {
     /**
      * 获取品牌关联的分类
      */
-    @GetMapping("/catalog/list")
+    @GetMapping("/category/list")
     //@RequiresPermissions("product:categorybrandrelation:list")
     public R categoryList(@RequestParam("brandId") Long brandId){
         List<CategoryBrandRelationEntity> data =

@@ -47,7 +47,7 @@
         label="sku介绍描述">
       </el-table-column>
       <el-table-column
-        prop="catalogId"
+        prop="categoryId"
         header-align="center"
         align="center"
         label="所属分类id">

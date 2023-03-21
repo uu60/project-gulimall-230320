@@ -13,8 +13,8 @@
     <el-form-item label="sku介绍描述" prop="skuDesc">
       <el-input v-model="dataForm.skuDesc" placeholder="sku介绍描述"></el-input>
     </el-form-item>
-    <el-form-item label="所属分类id" prop="catalogId">
-      <el-input v-model="dataForm.catalogId" placeholder="所属分类id"></el-input>
+    <el-form-item label="所属分类id" prop="categoryId">
+      <el-input v-model="dataForm.categoryId" placeholder="所属分类id"></el-input>
     </el-form-item>
     <el-form-item label="品牌id" prop="brandId">
       <el-input v-model="dataForm.brandId" placeholder="品牌id"></el-input>
@@ -52,7 +52,7 @@
           spuId: '',
           skuName: '',
           skuDesc: '',
-          catalogId: '',
+          categoryId: '',
           brandId: '',
           skuDefaultImg: '',
           skuTitle: '',
@@ -70,7 +70,7 @@
           skuDesc: [
             { required: true, message: 'sku介绍描述不能为空', trigger: 'blur' }
           ],
-          catalogId: [
+          categoryId: [
             { required: true, message: '所属分类id不能为空', trigger: 'blur' }
           ],
           brandId: [
@@ -110,7 +110,7 @@
                 this.dataForm.spuId = data.skuInfo.spuId
                 this.dataForm.skuName = data.skuInfo.skuName
                 this.dataForm.skuDesc = data.skuInfo.skuDesc
-                this.dataForm.catalogId = data.skuInfo.catalogId
+                this.dataForm.categoryId = data.skuInfo.categoryId
                 this.dataForm.brandId = data.skuInfo.brandId
                 this.dataForm.skuDefaultImg = data.skuInfo.skuDefaultImg
                 this.dataForm.skuTitle = data.skuInfo.skuTitle
@@ -134,7 +134,7 @@
                 'spuId': this.dataForm.spuId,
                 'skuName': this.dataForm.skuName,
                 'skuDesc': this.dataForm.skuDesc,
-                'catalogId': this.dataForm.catalogId,
+                'categoryId': this.dataForm.categoryId,
                 'brandId': this.dataForm.brandId,
                 'skuDefaultImg': this.dataForm.skuDefaultImg,
                 'skuTitle': this.dataForm.skuTitle,

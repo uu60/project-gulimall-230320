@@ -12,6 +12,6 @@ public class AttrGroupWithAttrsVo {
     private Integer sort;
     private String descript;
     private String icon;
-    private Long catalogId;
+    private Long categoryId;
     private List<AttrEntity> attrs;
 }

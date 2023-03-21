@@ -43,10 +43,10 @@ public class AttrGroupEntity implements Serializable {
 	/**
 	 * 所属分类id
 	 */
-	private Long catalogId;
+	private Long categoryId;
 	/**
 	 *
 	 */
 	@TableField(exist = false)
-	private Long[] catalogPath;
+	private Long[] categoryPath;
 }

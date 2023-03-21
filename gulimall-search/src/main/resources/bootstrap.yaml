@@ -1,3 +1,13 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: gulimall-search
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+        namespace: f985ac8f-15b3-49a6-b42e-7fb69b064c94

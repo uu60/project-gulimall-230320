@@ -35,7 +35,7 @@
         label="品牌id">
       </el-table-column>
       <el-table-column
-        prop="catalogId"
+        prop="categoryId"
         header-align="center"
         align="center"
         label="分类id">
@@ -47,7 +47,7 @@
         label="">
       </el-table-column>
       <el-table-column
-        prop="catalogName"
+        prop="categoryName"
         header-align="center"
         align="center"
         label="">

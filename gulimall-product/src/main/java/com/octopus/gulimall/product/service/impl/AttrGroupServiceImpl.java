@@ -39,7 +39,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     }
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params, Long catalogId) {
+    public PageUtils queryPage(Map<String, Object> params, Long categoryId) {
         QueryWrapper<AttrGroupEntity> wrapper = new QueryWrapper<>();
         String key = (String) params.get("key");
         if (!StringUtils.isEmpty(key)) {
@@ -47,8 +47,8 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
                 obj.eq("attr_group_id", key).or().like("attr_group_name", key);
             });
         }
-        if (catalogId != 0) {
-            wrapper.eq("catalog_id", catalogId);
+        if (categoryId != 0) {
+            wrapper.eq("category_id", categoryId);
         }
         IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
         return new PageUtils(page);
@@ -56,12 +56,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 根据分类id查出所有的分组以及这些组里面的属性
-     * @param catalogId
+     * @param categoryId
      * @return
      */
     @Override
-    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatalogId(Long catalogId) {
-        List<AttrGroupEntity> entities = this.list(new QueryWrapper<AttrGroupEntity>().eq("catalog_id", catalogId));
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCategoryId(Long categoryId) {
+        List<AttrGroupEntity> entities = this.list(new QueryWrapper<AttrGroupEntity>().eq("category_id", categoryId));
         List<AttrGroupWithAttrsVo> collect = entities.stream().map(entity -> {
             AttrGroupWithAttrsVo attrGroupWithAttrsVo = new AttrGroupWithAttrsVo();
             BeanUtils.copyProperties(entity, attrGroupWithAttrsVo);
@@ -73,9 +73,9 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     }
 
     @Override
-    public List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+    public List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId) {
         // 1. 查出当前spu对应的所有属性的分组信息以及当前分组下的属性对应值
-        List<SkuItemVo.SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
+        List<SkuItemVo.SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId, categoryId);
         return null;
     }
 

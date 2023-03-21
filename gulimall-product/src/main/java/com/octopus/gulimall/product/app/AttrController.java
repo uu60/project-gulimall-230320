@@ -37,9 +37,9 @@ public class AttrController {
         return R.ok().put("data", entities);
     }
 
-    @GetMapping("/{attrType}/list/{catalogId}")
-    public R attrList(@RequestParam Map<String, Object> params, @PathVariable("attrType") String attrType, @PathVariable("catalogId") Long catalogId) {
-        PageUtils page = attrService.queryAttrPage(params, attrType, catalogId);
+    @GetMapping("/{attrType}/list/{categoryId}")
+    public R attrList(@RequestParam Map<String, Object> params, @PathVariable("attrType") String attrType, @PathVariable("categoryId") Long categoryId) {
+        PageUtils page = attrService.queryAttrPage(params, attrType, categoryId);
         return R.ok().put("page", page);
     }
 

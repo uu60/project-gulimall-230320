@@ -20,6 +20,6 @@ public interface AttrGroupDao extends BaseMapper<AttrGroupEntity> {
 
     // TODO: p205-209
     @SuppressWarnings("all")
-    List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(@Param("spuId") Long spuId, @Param("catalogId") Long catalogId);
+    List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(@Param("spuId") Long spuId, @Param("categoryId") Long categoryId);
 
 }

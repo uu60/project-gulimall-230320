@@ -49,7 +49,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         QueryWrapper<SkuInfoEntity> wrapper = new QueryWrapper<>();
         /**
          * key:
-         * catalogId: 0
+         * categoryId: 0
          * brandId: 0
          * min: 0
          * max: 0
@@ -60,9 +60,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
                 w.eq("sku_id", key).or().like("sku_name", key);
             });
         }
-        String catalogId = (String) params.get("catalogId");
-        if (StringUtils.hasText(catalogId) && !"0".equals(catalogId)) {
-            wrapper.eq("catalog_id", catalogId);
+        String categoryId = (String) params.get("categoryId");
+        if (StringUtils.hasText(categoryId) && !"0".equals(categoryId)) {
+            wrapper.eq("category_id", categoryId);
         }
         String brandId = (String) params.get("brandId");
         if (StringUtils.hasText(brandId) && !"0".equals(brandId)) {

@@ -11,7 +11,7 @@ import com.octopus.gulimall.product.dao.CategoryDao;
 import com.octopus.gulimall.product.entity.CategoryEntity;
 import com.octopus.gulimall.product.service.CategoryBrandRelationService;
 import com.octopus.gulimall.product.service.CategoryService;
-import com.octopus.gulimall.product.vo.Catalog2Vo;
+import com.octopus.gulimall.product.vo.Category2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -59,12 +59,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
-    public Long[] findCatalogPath(Long catalogId) {
-        if (catalogId == null) {
+    public Long[] findCategoryPath(Long categoryId) {
+        if (categoryId == null) {
             return new Long[0];
         }
         List<Long> path = new ArrayList<>();
-        findParentPath(catalogId, path);
+        findParentPath(categoryId, path);
         return path.toArray(new Long[0]);
     }
 
@@ -75,7 +75,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 //    @CacheEvict(value = "category", key = "'getLevel1Categories'")
     @Caching(evict = {
             @CacheEvict(value = "category", key = "'getLevel1Categories'"),
-            @CacheEvict(value = "category", key = "'getCatalogJson'")
+            @CacheEvict(value = "category", key = "'getCategoryJson'")
     })
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
@@ -93,7 +93,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Override
     @Cacheable(value = "category", key = "#root.methodName")
-    public Map<String, List<Catalog2Vo>> getCatalogJson() {
+    public Map<String, List<Category2Vo>> getCategoryJson() {
         List<CategoryEntity> selectList = baseMapper.selectList(null);
         // 1 查出所有一级分类
         List<CategoryEntity> level1Categories = getChildren(selectList, 0L);
@@ -101,10 +101,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return level1Categories.stream().collect(Collectors.toMap(e -> e.getCatId().toString(), e1 -> {
             // 1. 每一个一级分类，查到这个一级分类所有二级分类
             List<CategoryEntity> categoryEntities = getChildren(selectList, e1.getCatId());
-            List<Catalog2Vo> catalog2Vos = null;
+            List<Category2Vo> category2Vos = null;
             if (categoryEntities != null) {
-                catalog2Vos = categoryEntities.stream().map(e2 -> {
-                    Catalog2Vo catalog2Vo = new Catalog2Vo(e1.getCatId().toString(), null,
+                category2Vos = categoryEntities.stream().map(e2 -> {
+                    Category2Vo category2Vo = new Category2Vo(e1.getCatId().toString(), null,
                             e2.getCatId().toString(),
                             e2.getName());
                     // 查询三级
@@ -113,20 +113,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                     if (e3s != null) {
                         // 封装成指定格式
                         vo3s = e3s.stream().map(e3 -> {
-                            return new Catalog2Vo.Catalog3Vo(e2.getCatId().toString(), e3.getCatId().toString(),
+                            return new Category2Vo.Category3Vo(e2.getCatId().toString(), e3.getCatId().toString(),
                                     e3.getName());
                         }).collect(Collectors.toList());
                     }
-                    catalog2Vo.setCatalog3List(vo3s);
-                    return catalog2Vo;
+                    category2Vo.setCategory3List(vo3s);
+                    return category2Vo;
                 }).collect(Collectors.toList());
             }
-            return catalog2Vos;
+            return category2Vos;
         }));
     }
 
 
-    private Map<String, List<Catalog2Vo>> getCatalogJsonFromDb() {
+    private Map<String, List<Category2Vo>> getCategoryJsonFromDb() {
     /*
       将数据库的多次查询变为一次
      */
@@ -134,14 +134,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         // 1 查出所有一级分类
         List<CategoryEntity> level1Categories = getChildren(selectList, 0L);
         // 2 封装数据
-        Map<String, List<Catalog2Vo>> collect =
+        Map<String, List<Category2Vo>> collect =
                 level1Categories.stream().collect(Collectors.toMap(e -> e.getCatId().toString(), e1 -> {
                     // 1. 每一个一级分类，查到这个一级分类所有二级分类
                     List<CategoryEntity> categoryEntities = getChildren(selectList, e1.getCatId());
-                    List<Catalog2Vo> catalog2Vos = null;
+                    List<Category2Vo> category2Vos = null;
                     if (categoryEntities != null) {
-                        catalog2Vos = categoryEntities.stream().map(e2 -> {
-                            Catalog2Vo catalog2Vo = new Catalog2Vo(e1.getCatId().toString(), null,
+                        category2Vos = categoryEntities.stream().map(e2 -> {
+                            Category2Vo category2Vo = new Category2Vo(e1.getCatId().toString(), null,
                                     e2.getCatId().toString(),
                                     e2.getName());
                             // 查询三级
@@ -150,18 +150,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                             if (e3s != null) {
                                 // 封装成指定格式
                                 vo3s = e3s.stream().map(e3 -> {
-                                    return new Catalog2Vo.Catalog3Vo(e2.getCatId().toString(), e3.getCatId().toString(),
+                                    return new Category2Vo.Category3Vo(e2.getCatId().toString(), e3.getCatId().toString(),
                                             e3.getName());
                                 }).collect(Collectors.toList());
                             }
-                            catalog2Vo.setCatalog3List(vo3s);
-                            return catalog2Vo;
+                            category2Vo.setCategory3List(vo3s);
+                            return category2Vo;
                         }).collect(Collectors.toList());
                     }
-                    return catalog2Vos;
+                    return category2Vos;
                 }));
         // 查到的数据再放入缓存，将查出的对象转为JSON
-//        redisTemplate.opsForValue().set("catalogJson", JSON.toJSONString(collect), 1, TimeUnit.DAYS);
+//        redisTemplate.opsForValue().set("categoryJson", JSON.toJSONString(collect), 1, TimeUnit.DAYS);
         return collect;
     }
 
@@ -169,9 +169,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return selectList.stream().filter(entity -> entity.getParentCid().equals(parentCid)).collect(Collectors.toList());
     }
 
-    private void findParentPath(Long catalogId, List<Long> path) {
-        CategoryEntity entityById = this.getById(catalogId);
-        path.add(catalogId);
+    private void findParentPath(Long categoryId, List<Long> path) {
+        CategoryEntity entityById = this.getById(categoryId);
+        path.add(categoryId);
         Long parentCid = entityById.getParentCid();
         if (parentCid == 0) {
             Collections.reverse(path);

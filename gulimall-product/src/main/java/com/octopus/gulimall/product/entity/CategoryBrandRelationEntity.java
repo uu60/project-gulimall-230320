@@ -30,7 +30,7 @@ public class CategoryBrandRelationEntity implements Serializable {
 	/**
 	 * 分类id
 	 */
-	private Long catalogId;
+	private Long categoryId;
 	/**
 	 * 
 	 */
@@ -38,6 +38,6 @@ public class CategoryBrandRelationEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private String catalogName;
+	private String categoryName;
 
 }

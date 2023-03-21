@@ -24,7 +24,7 @@ var env         = process.env.npm_config_qa ? 'qa' : process.env.npm_config_uat 
 gulp.task('build', $.shell.task([ 'node build/build.js' ]));
 
 // 创建版本号目录
-gulp.task('create:versionCatalog', function () {
+gulp.task('create:versionCategory', function () {
   return gulp.src(`${distPath}/static/**/*`)
     .pipe(gulp.dest(`${versionPath}/static/`))
 });
@@ -63,4 +63,4 @@ gulp.task('clean', function () {
 
 //gulp.series|4.0 依赖
 //gulp.parallel|4.0 多个依赖嵌套
-gulp.task('default',gulp.series(gulp.series('build','create:versionCatalog','replace:cdnUrl','replace:version','concat:config','cleanBuild')));
+gulp.task('default',gulp.series(gulp.series('build','create:versionCategory','replace:cdnUrl','replace:version','concat:config','cleanBuild')));

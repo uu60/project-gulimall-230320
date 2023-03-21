@@ -127,7 +127,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 SkuInfoEntity skuInfoEntity = new SkuInfoEntity();
                 BeanUtils.copyProperties(sku, skuInfoEntity);
                 skuInfoEntity.setBrandId(infoEntity.getBrandId());
-                skuInfoEntity.setCatalogId(infoEntity.getCatalogId());
+                skuInfoEntity.setCategoryId(infoEntity.getCategoryId());
                 skuInfoEntity.setSaleCount(0L);
                 skuInfoEntity.setSpuId(infoEntity.getId());
                 skuInfoEntity.setSkuDefaultImg(defaultImg);
@@ -193,9 +193,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         if (StringUtils.hasText(brandId) && !"0".equals(brandId)) {
             wrapper.or().eq("brand_id", brandId);
         }
-        String catalogId = (String) params.get("catalogId");
-        if (StringUtils.hasText(catalogId) && !"0".equals(catalogId)) {
-            wrapper.or().eq("catalog_id", catalogId);
+        String categoryId = (String) params.get("categoryId");
+        if (StringUtils.hasText(categoryId) && !"0".equals(categoryId)) {
+            wrapper.or().eq("category_id", categoryId);
         }
 
         IPage<SpuInfoEntity> page = this.page(
@@ -261,8 +261,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModel.setBrandName(brandEntity.getName());
             esModel.setBrandImg(brandEntity.getLogo());
 
-            CategoryEntity categoryEntity = categoryService.getById(esModel.getCatalogId());
-            esModel.setCatalogName(categoryEntity.getName());
+            CategoryEntity categoryEntity = categoryService.getById(esModel.getCategoryId());
+            esModel.setCategoryName(categoryEntity.getName());
 
             // 设置检索属性
             esModel.setAttrs(attrList);

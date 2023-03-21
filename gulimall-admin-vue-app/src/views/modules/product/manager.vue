@@ -3,7 +3,7 @@
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form :inline="true" :model="dataForm">
         <el-form-item label="分类">
-          <category-cascader :catalogPath.sync="catalogPath"></category-cascader>
+          <category-cascader :categoryPath.sync="categoryPath"></category-cascader>
         </el-form-item>
         <el-form-item label="品牌">
           <brand-select style="width:160px"></brand-select>
@@ -36,7 +36,7 @@
           <br />
           商品描述：{{scope.row.skuDesc}}
           <br />
-          分类ID：{{scope.row.catalogId}}
+          分类ID：{{scope.row.categoryId}}
           <br />
           SpuID：{{scope.row.spuId}}
           <br />
@@ -102,7 +102,7 @@ export default {
       dataForm: {
         key: "",
         brandId: 0,
-        catalogId: 0,
+        categoryId: 0,
         price: {
           min: 0,
           max: 0
@@ -115,7 +115,7 @@ export default {
       dataListLoading: false,
       dataListSelections: [],
       addOrUpdateVisible: false,
-      catalogPath: []
+      categoryPath: []
     };
   },
   components: {
@@ -150,7 +150,7 @@ export default {
           page: this.pageIndex,
           limit: this.pageSize,
           key: this.dataForm.key,
-          catalogId: this.dataForm.catalogId,
+          categoryId: this.dataForm.categoryId,
           brandId: this.dataForm.brandId,
           min: this.dataForm.price.min,
           max: this.dataForm.price.max
@@ -184,7 +184,7 @@ export default {
   },
   mounted() {
     this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
-      this.dataForm.catalogId = val[val.length - 1];
+      this.dataForm.categoryId = val[val.length - 1];
     });
     this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
       this.dataForm.brandId = val;

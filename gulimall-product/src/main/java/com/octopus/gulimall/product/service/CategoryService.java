@@ -3,7 +3,7 @@ package com.octopus.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.gulimall.product.entity.CategoryEntity;
-import com.octopus.gulimall.product.vo.Catalog2Vo;
+import com.octopus.gulimall.product.vo.Category2Vo;
 
 import java.util.List;
 import java.util.Map;
@@ -23,12 +23,12 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     void removeMenuByIds(List<Long> asList);
 
-    Long[] findCatalogPath(Long catalogId);
+    Long[] findCategoryPath(Long categoryId);
 
     void updateCascade(CategoryEntity category);
 
     List<CategoryEntity> getLevel1Categories();
 
-    Map<String, List<Catalog2Vo>> getCatalogJson();
+    Map<String, List<Category2Vo>> getCategoryJson();
 }
 

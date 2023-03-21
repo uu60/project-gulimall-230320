@@ -19,7 +19,7 @@
             <el-form-item label="商品描述" prop="spuDescription">
               <el-input v-model="spu.spuDescription"></el-input>
             </el-form-item>
-            <el-form-item label="选择分类" prop="catalogId">
+            <el-form-item label="选择分类" prop="categoryId">
               <category-cascader></category-cascader>
             </el-form-item>
             <el-form-item label="选择品牌" prop="brandId">
@@ -361,12 +361,12 @@ export default {
       uploadDialogVisible: false,
       uploadImages: [],
       step: 0,
-      //spu_name  spu_description  catalog_id  brand_id  weight  publish_status
+      //spu_name  spu_description  category_id  brand_id  weight  publish_status
       spu: {
         //要提交的数据
         spuName: "",
         spuDescription: "",
-        catalogId: 0,
+        categoryId: 0,
         brandId: "",
         weight: "",
         publishStatus: 0,
@@ -387,7 +387,7 @@ export default {
         spuDescription: [
           { required: true, message: "请编写一个简单描述", trigger: "blur" }
         ],
-        catalogId: [
+        categoryId: [
           { required: true, message: "请选择一个分类", trigger: "blur" }
         ],
         brandId: [
@@ -455,7 +455,7 @@ export default {
       this.spu = {
         spuName: "",
         spuDescription: "",
-        catalogId: 0,
+        categoryId: 0,
         brandId: "",
         weight: "",
         publishStatus: 0,
@@ -643,7 +643,7 @@ export default {
       if (!this.dataResp.steped[1]) {
         this.$http({
           url: this.$http.adornUrl(
-            `/product/attr/sale/list/${this.spu.catalogId}`
+            `/product/attr/sale/list/${this.spu.categoryId}`
           ),
           method: "get",
           params: this.$http.adornParams({
@@ -669,7 +669,7 @@ export default {
       if (!this.dataResp.steped[0]) {
         this.$http({
           url: this.$http.adornUrl(
-            `/product/attrgroup/${this.spu.catalogId}/withattr`
+            `/product/attrgroup/${this.spu.categoryId}/withattr`
           ),
           method: "get",
           params: this.$http.adornParams({})
@@ -785,7 +785,7 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
-      this.spu.catalogId = val[val.length - 1];
+      this.spu.categoryId = val[val.length - 1];
     });
     this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
       this.spu.brandId = val;

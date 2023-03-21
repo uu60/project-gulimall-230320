@@ -48,13 +48,13 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public void saveDetail(CategoryBrandRelationEntity categoryBrandRelation) {
         Long brandId = categoryBrandRelation.getBrandId();
-        Long catalogId = categoryBrandRelation.getCatalogId();
+        Long categoryId = categoryBrandRelation.getCategoryId();
 
         BrandEntity brandEntity = brandDao.selectById(brandId);
-        CategoryEntity categoryEntity = categoryDao.selectById(catalogId);
+        CategoryEntity categoryEntity = categoryDao.selectById(categoryId);
 
         categoryBrandRelation.setBrandName(brandEntity.getName());
-        categoryBrandRelation.setCatalogName(categoryEntity.getName());
+        categoryBrandRelation.setCategoryName(categoryEntity.getName());
 
         this.save(categoryBrandRelation);
     }
@@ -75,7 +75,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public List<BrandEntity> getBrandsByCatId(Long catId) {
         List<CategoryBrandRelationEntity> entities =
-                relationDao.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catalog_id", catId));
+                relationDao.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("category_id", catId));
         List<BrandEntity> collect = entities.stream().map(entity -> {
             Long brandId = entity.getBrandId();
             BrandEntity byId = brandService.getById(brandId);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient("search")
+@FeignClient("gulimall-search")
 public interface SearchFrignService {
 
     @PostMapping("/search/save/product")

@@ -7,14 +7,14 @@
     <el-form-item label="品牌id" prop="brandId">
       <el-input v-model="dataForm.brandId" placeholder="品牌id"></el-input>
     </el-form-item>
-    <el-form-item label="分类id" prop="catalogId">
-      <el-input v-model="dataForm.catalogId" placeholder="分类id"></el-input>
+    <el-form-item label="分类id" prop="categoryId">
+      <el-input v-model="dataForm.categoryId" placeholder="分类id"></el-input>
     </el-form-item>
     <el-form-item label="" prop="brandName">
       <el-input v-model="dataForm.brandName" placeholder=""></el-input>
     </el-form-item>
-    <el-form-item label="" prop="catalogName">
-      <el-input v-model="dataForm.catalogName" placeholder=""></el-input>
+    <el-form-item label="" prop="categoryName">
+      <el-input v-model="dataForm.categoryName" placeholder=""></el-input>
     </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -32,21 +32,21 @@
         dataForm: {
           id: 0,
           brandId: '',
-          catalogId: '',
+          categoryId: '',
           brandName: '',
-          catalogName: ''
+          categoryName: ''
         },
         dataRule: {
           brandId: [
             { required: true, message: '品牌id不能为空', trigger: 'blur' }
           ],
-          catalogId: [
+          categoryId: [
             { required: true, message: '分类id不能为空', trigger: 'blur' }
           ],
           brandName: [
             { required: true, message: '不能为空', trigger: 'blur' }
           ],
-          catalogName: [
+          categoryName: [
             { required: true, message: '不能为空', trigger: 'blur' }
           ]
         }
@@ -66,9 +66,9 @@
             }).then(({data}) => {
               if (data && data.code === 0) {
                 this.dataForm.brandId = data.categoryBrandRelation.brandId
-                this.dataForm.catalogId = data.categoryBrandRelation.catalogId
+                this.dataForm.categoryId = data.categoryBrandRelation.categoryId
                 this.dataForm.brandName = data.categoryBrandRelation.brandName
-                this.dataForm.catalogName = data.categoryBrandRelation.catalogName
+                this.dataForm.categoryName = data.categoryBrandRelation.categoryName
               }
             })
           }
@@ -84,9 +84,9 @@
               data: this.$http.adornData({
                 'id': this.dataForm.id || undefined,
                 'brandId': this.dataForm.brandId,
-                'catalogId': this.dataForm.catalogId,
+                'categoryId': this.dataForm.categoryId,
                 'brandName': this.dataForm.brandName,
-                'catalogName': this.dataForm.catalogName
+                'categoryName': this.dataForm.categoryName
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

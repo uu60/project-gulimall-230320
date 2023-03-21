@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-form :inline="true" :model="dataForm">
           <el-form-item label="分类">
-            <category-cascader :catalogPath.sync="catalogPath"></category-cascader>
+            <category-cascader :categoryPath.sync="categoryPath"></category-cascader>
           </el-form-item>
           <el-form-item label="品牌">
             <brand-select style="width:160px"></brand-select>
@@ -46,12 +46,12 @@ export default {
     //这里存放数据
     return {
       catId: 0,
-      catalogPath: [],
+      categoryPath: [],
       dataForm: {
         status: "",
         key: "",
         brandId: 0,
-        catalogId: 0
+        categoryId: 0
       },
       catPathSub: null,
       brandIdSub: null
@@ -74,7 +74,7 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
-      this.dataForm.catalogId = val[val.length-1];
+      this.dataForm.categoryId = val[val.length-1];
     });
     this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
       this.dataForm.brandId = val;

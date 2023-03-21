@@ -12,7 +12,7 @@ public class AttrVo {
     private String valueSelect;
     private Integer attrType;
     private Long enable;
-    private Long catalogId;
+    private Long categoryId;
     private Integer showDesc;
     private Integer valueType;
     private Long attrGroupId;

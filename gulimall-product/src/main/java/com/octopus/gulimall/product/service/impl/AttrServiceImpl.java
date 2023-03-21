@@ -71,13 +71,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
 
     @Override
-    public PageUtils queryAttrPage(Map<String, Object> params, String attrType, Long catalogId) {
+    public PageUtils queryAttrPage(Map<String, Object> params, String attrType, Long categoryId) {
         QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("attr_type",
                 "base".equalsIgnoreCase(attrType) ? ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode() :
                         ProductConstant.AttrEnum.ATTR_TYPE_SALE.getCode());
 
-        if (catalogId != 0) {
-            queryWrapper.eq("catalog_id", catalogId);
+        if (categoryId != 0) {
+            queryWrapper.eq("category_id", categoryId);
         }
 
         String key = (String) params.get("key");
@@ -107,9 +107,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 }
             }
 
-            CategoryEntity categoryEntity = categoryDao.selectById(entity.getCatalogId());
+            CategoryEntity categoryEntity = categoryDao.selectById(entity.getCategoryId());
             if (categoryEntity != null) {
-                attrRespVo.setCatalogName(categoryEntity.getName());
+                attrRespVo.setCategoryName(categoryEntity.getName());
             }
 
             return attrRespVo;
@@ -144,9 +144,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
 
         // 设置分类信息
-        Long catalogId = attrEntity.getCatalogId();
-        Long[] catalogPath = categoryService.findCatalogPath(catalogId);
-        attrRespVo.setCatalogPath(catalogPath);
+        Long categoryId = attrEntity.getCategoryId();
+        Long[] categoryPath = categoryService.findCategoryPath(categoryId);
+        attrRespVo.setCategoryPath(categoryPath);
 
         return attrRespVo;
     }
@@ -212,15 +212,15 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     public PageUtils getNoRelationAttr(Map<String, Object> params, Long attrgroupId) {
         // 当前分组只能关联自己所属分类里面的所有属性
         AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
-        Long catalogId = attrGroupEntity.getCatalogId();
+        Long categoryId = attrGroupEntity.getCategoryId();
         // 当前分组只能关联别的分组没有引用的分组
         // 1 当前分类下的其他分组
         List<AttrGroupEntity> groups = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq(
-                "catalog_id", catalogId));
+                "category_id", categoryId));
         List<Long> groupIds = groups.stream().map(group -> group.getAttrGroupId()).collect(Collectors.toList());
         // 2 这些分组的关联属性
-        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("catalog_id",
-                catalogId).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
+        QueryWrapper<AttrEntity> queryWrapper = new QueryWrapper<AttrEntity>().eq("category_id",
+                categoryId).eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode());
         List<AttrAttrgroupRelationEntity> relationEntities =
                 relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", groupIds));
         List<Long> attrIds =

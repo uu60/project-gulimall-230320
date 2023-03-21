@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AttrRespVo extends AttrVo {
-    private String catalogName;
+    private String categoryName;
     private String groupName;
-    private Long[] catalogPath;
+    private Long[] categoryPath;
 }

@@ -24,11 +24,11 @@
       <el-form-item label="组图标" prop="icon">
         <el-input v-model="dataForm.icon" placeholder="组图标"></el-input>
       </el-form-item>
-      <el-form-item label="所属分类" prop="catalogId">
-        <!-- <el-input v-model="dataForm.catalogId" placeholder="所属分类id"></el-input> @change="handleChange" -->
-        <!-- <el-cascader filterable placeholder="试试搜索：手机" v-model="catalogPath" :options="categorys"  :props="props"></el-cascader> -->
-        <!-- :catalogPath="catalogPath"自定义绑定的属性，可以给子组件传值 -->
-        <category-cascader :catalogPath.sync="catalogPath"></category-cascader>
+      <el-form-item label="所属分类" prop="categoryId">
+        <!-- <el-input v-model="dataForm.categoryId" placeholder="所属分类id"></el-input> @change="handleChange" -->
+        <!-- <el-cascader filterable placeholder="试试搜索：手机" v-model="categoryPath" :options="categorys"  :props="props"></el-cascader> -->
+        <!-- :categoryPath="categoryPath"自定义绑定的属性，可以给子组件传值 -->
+        <category-cascader :categoryPath.sync="categoryPath"></category-cascader>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -51,14 +51,14 @@ export default {
       },
       visible: false,
       categorys: [],
-      catalogPath: [],
+      categoryPath: [],
       dataForm: {
         attrGroupId: 0,
         attrGroupName: "",
         sort: "",
         descript: "",
         icon: "",
-        catalogId: 0
+        categoryId: 0
       },
       dataRule: {
         attrGroupName: [
@@ -69,7 +69,7 @@ export default {
           { required: true, message: "描述不能为空", trigger: "blur" }
         ],
         icon: [{ required: true, message: "组图标不能为空", trigger: "blur" }],
-        // catalogId: [
+        // categoryId: [
         //   { required: true, message: "所属分类id不能为空", trigger: "blur" }
         // ]
       }
@@ -79,7 +79,7 @@ export default {
 
   methods: {
     dialogClose(){
-      this.catalogPath = [];
+      this.categoryPath = [];
     },
     getCategorys(){
       this.$http({
@@ -107,9 +107,9 @@ export default {
               this.dataForm.sort = data.attrGroup.sort;
               this.dataForm.descript = data.attrGroup.descript;
               this.dataForm.icon = data.attrGroup.icon;
-              this.dataForm.catalogId = data.attrGroup.catalogId;
-              //查出catalogId的完整路径
-              this.catalogPath =  data.attrGroup.catalogPath;
+              this.dataForm.categoryId = data.attrGroup.categoryId;
+              //查出categoryId的完整路径
+              this.categoryPath =  data.attrGroup.categoryPath;
             }
           });
         }
@@ -132,7 +132,7 @@ export default {
               sort: this.dataForm.sort,
               descript: this.dataForm.descript,
               icon: this.dataForm.icon,
-              catalogId: this.catalogPath[this.catalogPath.length-1]
+              categoryId: this.categoryPath[this.categoryPath.length-1]
             })
           }).then(({ data }) => {
             if (data && data.code === 0) {
