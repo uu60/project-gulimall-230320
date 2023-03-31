@@ -1,15 +1,11 @@
-package site.zhourui.gilimall.search.vo;
+package com.octopus.search.to;
 
+import com.octopus.common.to.SkuEsModel;
 import lombok.Data;
-import site.zhourui.common.to.es.SkuEsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author zr
- * @date 2021/11/17 15:06
- */
 @Data
 public class SearchResult {
     //查询到的所有商品信息
@@ -22,7 +18,7 @@ public class SearchResult {
     private Integer totalPages;//总页码
     private List<Integer> pageNavs;
     private List<BrandVo> brands;//当前查询到的结果， 所有涉及到的品牌
-    private List<CatalogVo> catalogs;//当前查询到的结果， 所有涉及到的所有分类
+    private List<CategoryVo> categorys;//当前查询到的结果， 所有涉及到的所有分类
     private List<AttrVo> attrs;//当前查询到的结果， 所有涉及到的所有属性
     //==========以上是返回给页面的所有信息============
     //面包屑导航数据
@@ -44,9 +40,9 @@ public class SearchResult {
     }
 
     @Data
-    public static class CatalogVo{
-        private Long catalogId;
-        private String catalogName;
+    public static class CategoryVo {
+        private Long categoryId;
+        private String categoryName;
     }
 
     @Data

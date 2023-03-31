@@ -3,6 +3,7 @@ package com.octopus.gulimall.product.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.octopus.gulimall.product.entity.AttrGroupEntity;
 import com.octopus.gulimall.product.vo.SkuItemVo;
+import com.octopus.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,6 +21,6 @@ public interface AttrGroupDao extends BaseMapper<AttrGroupEntity> {
 
     // TODO: p205-209
     @SuppressWarnings("all")
-    List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(@Param("spuId") Long spuId, @Param("categoryId") Long categoryId);
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(@Param("spuId") Long spuId, @Param("categoryId") Long categoryId);
 
 }

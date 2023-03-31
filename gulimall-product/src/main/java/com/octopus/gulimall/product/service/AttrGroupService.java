@@ -5,6 +5,7 @@ import com.octopus.common.utils.PageUtils;
 import com.octopus.gulimall.product.entity.AttrGroupEntity;
 import com.octopus.gulimall.product.vo.AttrGroupWithAttrsVo;
 import com.octopus.gulimall.product.vo.SkuItemVo;
+import com.octopus.gulimall.product.vo.SpuItemAttrGroupVo;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,6 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCategoryId(Long categoryId);
 
-    List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId);
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId);
 }
 

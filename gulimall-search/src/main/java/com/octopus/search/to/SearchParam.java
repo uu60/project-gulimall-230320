@@ -1,17 +1,13 @@
-package site.zhourui.gilimall.search.vo;
+package com.octopus.search.to;
 
 import lombok.Data;
 
 import java.util.List;
 
-/**
- * @author zr
- * @date 2021/11/17 15:02
- */
 @Data
 public class SearchParam {
     private String keyword;//页面传递过来的全文匹配关键字 v
-    private Long catalog3Id;//三级分类 id v
+    private Long category3Id;//三级分类 id v
     /**
      * sort=saleCount_asc/desc
      * sort=skuPrice_asc/desc
@@ -22,7 +18,7 @@ public class SearchParam {
 
     /**
      * 过滤条件
-     *  hasStock(是否有货)、 skuPrice 区间、 brandId、 catalog3Id、 attrs
+     *  hasStock(是否有货)、 skuPrice 区间、 brandId、 category3Id、 attrs
      *  hasStock=0/1
      *  skuPrice=1_500/_500/500_
      *  brandId=1

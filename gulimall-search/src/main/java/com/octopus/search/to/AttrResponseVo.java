@@ -1,11 +1,7 @@
-package site.zhourui.gilimall.search.vo;
+package com.octopus.search.to;
 
 import lombok.Data;
 
-/**
- * @author zr
- * @date 2021/11/22 22:02
- */
 @Data
 public class AttrResponseVo {
     /**
@@ -43,7 +39,7 @@ public class AttrResponseVo {
     /**
      * 所属分类
      */
-    private Long catelogId;
+    private Long categoryId;
     /**
      * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整
      */
@@ -54,8 +50,8 @@ public class AttrResponseVo {
      */
     private Long attrGroupId;
 
-    private String catelogName;
+    private String categoryName;
     private String groupName;
 
-    private Long[] catelogPath;
+    private Long[] categoryPath;
 }

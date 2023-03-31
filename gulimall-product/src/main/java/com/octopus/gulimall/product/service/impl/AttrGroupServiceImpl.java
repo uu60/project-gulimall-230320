@@ -12,6 +12,7 @@ import com.octopus.gulimall.product.service.AttrGroupService;
 import com.octopus.gulimall.product.service.AttrService;
 import com.octopus.gulimall.product.vo.AttrGroupWithAttrsVo;
 import com.octopus.gulimall.product.vo.SkuItemVo;
+import com.octopus.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,10 +74,10 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     }
 
     @Override
-    public List<SkuItemVo.SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId) {
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId) {
         // 1. 查出当前spu对应的所有属性的分组信息以及当前分组下的属性对应值
-        List<SkuItemVo.SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId, categoryId);
-        return null;
+        List<SpuItemAttrGroupVo> vos = this.baseMapper.getAttrGroupWithAttrsBySpuId(spuId, categoryId);
+        return vos;
     }
 
 

@@ -825,10 +825,10 @@
                     </div>
                     <div class="sl_value">
                         <ul>
-                            <li th:each="catalog : ${result.catalogs}">
+                            <li th:each="category : ${result.categorys}">
                                 <a href="/static/search/#"
-                                   th:href="${'javascript:searchProducts(&quot;catalog3Id&quot;,'+catalog.catalogId+')'}"
-                                   th:text="${catalog.catalogName}">5.56英寸及以上
+                                   th:href="${'javascript:searchProducts(&quot;category3Id&quot;,'+category.categoryId+')'}"
+                                   th:text="${category.categoryName}">5.56英寸及以上
 
                                 </a>
                             </li>
