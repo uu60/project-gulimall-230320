@@ -1,10 +1,15 @@
 package com.octopus.gulimall.member.controller;
 
+import com.octopus.common.exception.BizCodeEnum;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.common.utils.R;
 import com.octopus.gulimall.member.entity.MemberEntity;
+import com.octopus.gulimall.member.exception.PhoneExistedException;
+import com.octopus.gulimall.member.exception.UsernameExistedException;
 import com.octopus.gulimall.member.feign.CouponFeignService;
 import com.octopus.gulimall.member.service.MemberService;
+import com.octopus.gulimall.member.vo.MemberLoginVo;
+import com.octopus.gulimall.member.vo.MemberRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +33,29 @@ public class MemberController {
 
     @Autowired
     CouponFeignService couponFeignService;
+
+    @PostMapping("/register")
+    public R register(@RequestBody MemberRegisterVo memberRegisterVo) {
+        try {
+            memberService.register(memberRegisterVo);
+        } catch (PhoneExistedException e) {
+            return R.error(BizCodeEnum.PHONE_EXIST_EXCEPTION.getCode(), BizCodeEnum.PHONE_EXIST_EXCEPTION.getMsg());
+        } catch (UsernameExistedException e) {
+            return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
+        }
+        return R.ok();
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody MemberLoginVo memberLoginVo) {
+        MemberEntity memberEntity = memberService.login(memberLoginVo);
+        if (memberEntity != null) {
+            return R.ok();
+        } else {
+            return R.error(BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getCode(),
+                    BizCodeEnum.LOGINACCT_PASSWORD_EXCEPTION.getMsg());
+        }
+    }
 
     @RequestMapping("/coupons")
     public R test() {
@@ -55,7 +83,7 @@ public class MemberController {
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("member:member:info")
     public R info(@PathVariable("id") Long id){
-		MemberEntity member = memberService.getById(id);
+        MemberEntity member = memberService.getById(id);
 
         return R.ok().put("member", member);
     }
@@ -66,7 +94,7 @@ public class MemberController {
     @RequestMapping("/save")
     //@RequiresPermissions("member:member:save")
     public R save(@RequestBody MemberEntity member){
-		memberService.save(member);
+        memberService.save(member);
 
         return R.ok();
     }
@@ -77,7 +105,7 @@ public class MemberController {
     @RequestMapping("/update")
     //@RequiresPermissions("member:member:update")
     public R update(@RequestBody MemberEntity member){
-		memberService.updateById(member);
+        memberService.updateById(member);
 
         return R.ok();
     }
@@ -88,7 +116,7 @@ public class MemberController {
     @RequestMapping("/delete")
     //@RequiresPermissions("member:member:delete")
     public R delete(@RequestBody Long[] ids){
-		memberService.removeByIds(Arrays.asList(ids));
+        memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
