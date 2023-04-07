@@ -5,6 +5,7 @@ import com.octopus.common.utils.PageUtils;
 import com.octopus.gulimall.member.entity.MemberEntity;
 import com.octopus.gulimall.member.exception.PhoneExistedException;
 import com.octopus.gulimall.member.exception.UsernameExistedException;
+import com.octopus.gulimall.member.vo.GithubSocialUser;
 import com.octopus.gulimall.member.vo.MemberLoginVo;
 import com.octopus.gulimall.member.vo.MemberRegisterVo;
 
@@ -27,5 +28,7 @@ public interface MemberService extends IService<MemberEntity> {
     void checkPhoneUnique(String phone) throws PhoneExistedException;
 
     MemberEntity login(MemberLoginVo memberLoginVo);
+
+    MemberEntity login(GithubSocialUser user);
 }
 

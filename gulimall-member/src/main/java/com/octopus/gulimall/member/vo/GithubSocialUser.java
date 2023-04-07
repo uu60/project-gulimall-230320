@@ -1,4 +1,4 @@
-package com.octopus.gulimall.vo;
+package com.octopus.gulimall.member.vo;
 
 import lombok.Data;
 
@@ -9,5 +9,6 @@ import lombok.Data;
 @Data
 public class GithubSocialUser {
     private String id;
+    private String login;
     private String accessToken;
 }

@@ -1,4 +1,4 @@
-package com.octopus.gulimall.config;
+package com.octopus.gulimall.product.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

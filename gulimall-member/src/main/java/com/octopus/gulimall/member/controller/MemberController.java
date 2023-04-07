@@ -8,6 +8,7 @@ import com.octopus.gulimall.member.exception.PhoneExistedException;
 import com.octopus.gulimall.member.exception.UsernameExistedException;
 import com.octopus.gulimall.member.feign.CouponFeignService;
 import com.octopus.gulimall.member.service.MemberService;
+import com.octopus.gulimall.member.vo.GithubSocialUser;
 import com.octopus.gulimall.member.vo.MemberLoginVo;
 import com.octopus.gulimall.member.vo.MemberRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,12 @@ public class MemberController {
             return R.error(BizCodeEnum.USER_EXIST_EXCEPTION.getCode(), BizCodeEnum.USER_EXIST_EXCEPTION.getMsg());
         }
         return R.ok();
+    }
+
+    @PostMapping("/oauth2/github/login")
+    public R oauthLogin(@RequestBody GithubSocialUser user) {
+        MemberEntity memberEntity = memberService.login(user);
+        return memberEntity == null ? R.error() : R.ok().put("data", memberEntity);
     }
 
     @PostMapping("/login")

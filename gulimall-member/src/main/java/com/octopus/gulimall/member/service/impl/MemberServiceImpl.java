@@ -12,6 +12,7 @@ import com.octopus.gulimall.member.exception.PhoneExistedException;
 import com.octopus.gulimall.member.exception.UsernameExistedException;
 import com.octopus.gulimall.member.service.MemberLevelService;
 import com.octopus.gulimall.member.service.MemberService;
+import com.octopus.gulimall.member.vo.GithubSocialUser;
 import com.octopus.gulimall.member.vo.MemberLoginVo;
 import com.octopus.gulimall.member.vo.MemberRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,25 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
                 return null;
             }
         }
+    }
+
+    @Override
+    public MemberEntity login(GithubSocialUser user) {
+        String id = user.getId();
+        MemberEntity memberEntity = baseMapper.selectOne(new QueryWrapper<MemberEntity>().eq("uid", id));
+        if (memberEntity != null) {
+            // 这个用户已经注册
+            memberEntity.setAccessToken(user.getAccessToken());
+            baseMapper.updateById(memberEntity);
+            return memberEntity;
+        }
+        // 需要注册一个
+        memberEntity = new MemberEntity();
+        memberEntity.setUid(id);
+        memberEntity.setNickname(user.getLogin());
+        memberEntity.setAccessToken(user.getAccessToken());
+        baseMapper.insert(memberEntity);
+        return memberEntity;
     }
 
 }

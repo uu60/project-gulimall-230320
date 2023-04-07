@@ -51,6 +51,7 @@ public class LoginController {
         try {
             resp = memberFeignService.register(userRegisterVo);
             if (resp.getCode() == 0) { // 成功
+
                 return "redirect:http://auth.gulimall.com/login.html";
             } else {
                 throw new RuntimeException();

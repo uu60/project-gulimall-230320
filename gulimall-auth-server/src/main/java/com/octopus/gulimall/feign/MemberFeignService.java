@@ -1,6 +1,7 @@
 package com.octopus.gulimall.feign;
 
 import com.octopus.common.utils.R;
+import com.octopus.gulimall.vo.GithubSocialUser;
 import com.octopus.gulimall.vo.UserLoginVo;
 import com.octopus.gulimall.vo.UserRegisterVo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -19,4 +20,7 @@ public interface MemberFeignService {
 
     @PostMapping("/member/member/login")
     R login(UserLoginVo vo);
+
+    @PostMapping("/member/member/oauth2/github/login")
+    R oauthLogin(GithubSocialUser user);
 }

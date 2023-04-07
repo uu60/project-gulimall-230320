@@ -1,4 +1,4 @@
-package com.octopus.gulimall.vo;
+package com.octopus.common.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
