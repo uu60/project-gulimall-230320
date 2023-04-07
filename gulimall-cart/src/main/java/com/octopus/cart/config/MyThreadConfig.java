@@ -1,4 +1,4 @@
-package com.octopus.gulimall.product.config;
+package com.octopus.cart.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class MyThreadConfig {
     @Bean
-    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties pool) {
+    public ThreadPoolExecutor threadPoolExecutor() {
         return new ThreadPoolExecutor(
-                pool.getCoreSize(),
-                pool.getMaxSize(),
-                pool.getKeepAliveTime(),
+                8,
+                12,
+                10,
                 TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>(100000),
                 Executors.defaultThreadFactory(),

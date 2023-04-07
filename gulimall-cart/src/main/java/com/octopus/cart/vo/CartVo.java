@@ -10,9 +10,9 @@ import java.util.List;
  * @date 2023/4/7 17:29
  */
 @Data
-public class Cart {
+public class CartVo {
 
-    private List<CartItem> items;
+    private List<CartItemVo> items;
     private Integer countNum;
     /**
      * 商品类型数量
@@ -30,7 +30,7 @@ public class Cart {
     public void updateCountNum() {
         int count = 0;
         if (items == null || items.size() == 0) {
-            for (CartItem item : items) {
+            for (CartItemVo item : items) {
                 count++;
             }
         }
