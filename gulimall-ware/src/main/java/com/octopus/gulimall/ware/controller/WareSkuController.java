@@ -1,10 +1,12 @@
 package com.octopus.gulimall.ware.controller;
 
+import com.octopus.common.exception.BizCodeEnum;
 import com.octopus.common.to.SkuHasStockVo;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.common.utils.R;
 import com.octopus.gulimall.ware.entity.WareSkuEntity;
 import com.octopus.gulimall.ware.service.WareSkuService;
+import com.octopus.gulimall.ware.vo.WareSkuLockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,16 @@ import java.util.Map;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+
+    @PostMapping("/lock/order")
+    public R orderLockStock(@RequestBody WareSkuLockVo vo) {
+        try {
+            boolean stock = wareSkuService.orderLockStock(vo);
+            return R.ok();
+        } catch (Exception e) {
+            return R.error(BizCodeEnum.NO_STOCK_EXCEPTION.getCode(), BizCodeEnum.NO_STOCK_EXCEPTION.getMsg());
+        }
+    }
 
     /**
      * 查询sku是否有库存
@@ -56,7 +68,7 @@ public class WareSkuController {
     @RequestMapping("/info/{id}")
     //@RequiresPermissions("ware:waresku:info")
     public R info(@PathVariable("id") Long id){
-		WareSkuEntity wareSku = wareSkuService.getById(id);
+        WareSkuEntity wareSku = wareSkuService.getById(id);
 
         return R.ok().put("wareSku", wareSku);
     }
@@ -67,7 +79,7 @@ public class WareSkuController {
     @RequestMapping("/save")
     //@RequiresPermissions("ware:waresku:save")
     public R save(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.save(wareSku);
+        wareSkuService.save(wareSku);
 
         return R.ok();
     }
@@ -78,7 +90,7 @@ public class WareSkuController {
     @RequestMapping("/update")
     //@RequiresPermissions("ware:waresku:update")
     public R update(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.updateById(wareSku);
+        wareSkuService.updateById(wareSku);
 
         return R.ok();
     }
@@ -89,7 +101,7 @@ public class WareSkuController {
     @RequestMapping("/delete")
     //@RequiresPermissions("ware:waresku:delete")
     public R delete(@RequestBody Long[] ids){
-		wareSkuService.removeByIds(Arrays.asList(ids));
+        wareSkuService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }

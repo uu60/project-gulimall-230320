@@ -1007,6 +1007,11 @@
 		$("#addrInput").val(addrId);
 		$.get("http://gulimall.com/api/ware/wareinfo/fare?addrId=" + addrId, function (resp) {
 			console.log(resp);
+			resp = {
+				data: {
+					fare: 6
+				}
+			};
 			$("#fare").text(resp.data.fare);
 			var total = [[${confirmOrderData.total}]];
 

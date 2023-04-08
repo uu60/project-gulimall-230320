@@ -3,11 +3,6 @@ spring:
     active: dev
   application:
     name: gulimall-order
-  datasource:
-    username: root
-    password: 4124894
-    url: jdbc:mysql://172.16.212.10:3306/gulimall_oms
-    driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     nacos:
       discovery:
@@ -21,4 +16,5 @@ spring:
             refresh: true
           - data-id: mybatis.yaml
             refresh: true
-
+  thymeleaf:
+    cache: false

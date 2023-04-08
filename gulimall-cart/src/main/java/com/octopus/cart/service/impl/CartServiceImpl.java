@@ -17,8 +17,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
@@ -66,7 +68,11 @@ public class CartServiceImpl implements CartService {
                 cartItemVo.setSkuAttrValues(productFeignService.getSkuSaleAttrValues(skuId));
             }, pool);
 
-            CompletableFuture.allOf(future, future1);
+            try {
+                CompletableFuture.allOf(future, future1).get();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             String jsonString = JSON.toJSONString(cartItemVo);
             cartOps.put(skuId.toString(), jsonString);
 
@@ -181,5 +187,20 @@ public class CartServiceImpl implements CartService {
     public void deleteIdCartInfo(Integer skuId) {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
         cartOps.delete(skuId.toString());
+    }
+
+    @Override
+    public List<CartItemVo> getCurrentUserCartItems() {
+        UserInfoTo userInfoTo = CartInterceptor.THREAD_LOCAL.get();
+        if (userInfoTo.getUserId() == null) {
+            return null;
+        }
+        String cartKey = CartConstant.CART_PREFIX + userInfoTo.getUserId();
+        List<CartItemVo> cartItems = getCartItems(cartKey);
+        return cartItems.stream().filter(CartItemVo::getCheck).map(item -> {
+            // 更新为最新价格
+            item.setPrice(BigDecimal.valueOf((Double) productFeignService.getPrice(item.getSkuId()).get("data")));
+            return item;
+        }).collect(Collectors.toList());
     }
 }

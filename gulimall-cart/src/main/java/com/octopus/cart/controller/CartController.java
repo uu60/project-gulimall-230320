@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author octopus
@@ -20,6 +23,12 @@ public class CartController {
 
     @Autowired
     CartService cartService;
+
+    @ResponseBody
+    @GetMapping("/currentUserCartItems")
+    public List<CartItemVo> getCurrentUserCartItems() {
+        return cartService.getCurrentUserCartItems();
+    }
 
     /**
      * 浏览器里面有一个cookie user-key，一个月过期

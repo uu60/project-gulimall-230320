@@ -1,4 +1,4 @@
-package com.octopus.gulimall.order.controller;
+package com.octopus.gulimall.order.app;
 
 import java.util.Arrays;
 import java.util.Map;
