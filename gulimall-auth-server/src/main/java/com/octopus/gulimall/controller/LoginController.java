@@ -1,6 +1,5 @@
 package com.octopus.gulimall.controller;
 
-import com.alibaba.fastjson.TypeReference;
 import com.octopus.common.utils.R;
 import com.octopus.gulimall.feign.MemberFeignService;
 import com.octopus.gulimall.vo.UserLoginVo;
