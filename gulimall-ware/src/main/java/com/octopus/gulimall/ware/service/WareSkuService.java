@@ -5,6 +5,7 @@ import com.octopus.common.to.SkuHasStockVo;
 import com.octopus.common.utils.PageUtils;
 import com.octopus.gulimall.ware.entity.WareSkuEntity;
 import com.octopus.gulimall.ware.vo.WareSkuLockVo;
+import com.octopus.gulimall.ware.vo.mq.StockLockedTo;
 
 import java.util.List;
 import java.util.Map;

@@ -175,12 +175,20 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         }
     }
 
+    @Override
+    public OrderEntity getOrderByOrderSn(String orderSn) {
+        OrderEntity orderEntity = baseMapper.selectOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
+        return orderEntity;
+    }
+
     private void saveOrder(OrderCreateTo orderCreateTo) {
 
         //获取订单信息
         OrderEntity order = orderCreateTo.getOrder();
         order.setModifyTime(new Date());
         order.setCreateTime(new Date());
+        // 默认失败用于测试
+        order.setStatus(4);
         //保存订单
         this.baseMapper.insert(order);
 

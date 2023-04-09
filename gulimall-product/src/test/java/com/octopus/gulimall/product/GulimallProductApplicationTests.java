@@ -1,6 +1,5 @@
 package com.octopus.gulimall.product;
 
-import com.octopus.gulimall.product.entity.BrandEntity;
 import com.octopus.gulimall.product.service.BrandService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,12 @@ class GulimallProductApplicationTests {
 
 	@Test
 	void contextLoads() {
-		BrandEntity brandEntity = new BrandEntity();
+//		BrandEntity brandEntity = new BrandEntity();
+//
+//		brandEntity.setName("中文测试");
+//		brandService.save(brandEntity);
+//		System.out.println("successful");
 
-		brandEntity.setName("中文测试");
-		brandService.save(brandEntity);
-		System.out.println("successful");
 	}
 
 }

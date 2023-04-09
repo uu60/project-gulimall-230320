@@ -18,7 +18,7 @@ import java.util.Map;
  * @date 2023/4/9 01:38
  */
 @Configuration
-public class MyMessageQueueConfig {
+public class MyRabbitConfig {
 
     @RabbitListener(queues = "order.release.order.queue")
     public void listener(OrderEntity orderEntity, Channel channel, Message message) {
