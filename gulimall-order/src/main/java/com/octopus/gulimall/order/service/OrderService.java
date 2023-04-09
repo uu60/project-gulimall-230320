@@ -18,6 +18,8 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
+    void closeOrder(OrderEntity orderEntity);
+
     PageUtils queryPage(Map<String, Object> params);
 
     OrderConfirmVo confirmOrder();

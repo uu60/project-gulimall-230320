@@ -55,7 +55,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
     private OrderFeignService orderFeignService;
 
     @RabbitHandler
-    public void handleStockLockedRelease(StockLockedTo to, Message message, Channel channel) {
+    public void handleStockLockedRelease(StockLockedTo to, Message message, Channel channel) throws IOException {
         Long id = to.getId(); // 库存工作单的id
         Long detailId = to.getDetailId();
         // 解锁
@@ -73,27 +73,17 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 if (data.getStatus() == 4) {
                     // 解锁库存
                     unlockStock(detail.getSkuId(), detail.getWareId(), detail.getSkuNum(), detail.getId());
-                    try {
-                        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            } else {
-                try {
+                    channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+                } else {
                     // 放回队列继续消费
                     channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
+            } else {
+                // 放回队列继续消费
+                channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
             }
         } else {
-            // 无需解锁
-            try {
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }
     }
 
@@ -113,10 +103,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         if (StringUtils.hasText(wareId)) {
             wrapper.eq("ware_id", wareId);
         }
-        IPage<WareSkuEntity> page = this.page(
-                new Query<WareSkuEntity>().getPage(params),
-                wrapper
-        );
+        IPage<WareSkuEntity> page = this.page(new Query<WareSkuEntity>().getPage(params), wrapper);
 
         return new PageUtils(page);
     }
@@ -139,7 +126,8 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 if (info.getCode() == 0) {
                     wareSkuEntity.setSkuName((String) skuInfo.get("skuName"));
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             this.baseMapper.insert(wareSkuEntity);
             return;
         }

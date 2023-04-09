@@ -22,6 +22,7 @@ import com.octopus.gulimall.order.service.OrderItemService;
 import com.octopus.gulimall.order.service.OrderService;
 import com.octopus.gulimall.order.to.OrderCreateTo;
 import com.octopus.gulimall.order.vo.*;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -33,7 +34,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -53,6 +53,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     StringRedisTemplate redisTemplate;
     @Autowired
     OrderItemService orderItemService;
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+
+    @Override
+    public void closeOrder(OrderEntity orderEntity) {
+        OrderEntity entity = getById(orderEntity.getId());
+        // 0表示未支付
+        if (entity.getStatus() == 0) {
+            // 关单，4表示关闭
+            entity.setStatus(4);
+            updateById(entity);
+        }
+    }
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -135,6 +148,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             BigDecimal payAmount = order.getOrder().getPayAmount();
             BigDecimal payPrice = vo.getPayPrice();
 
+            // 价格与存储时没有变化
             if (Math.abs(payAmount.subtract(payPrice).doubleValue()) < 0.01) {
                 // 保存订单
                 saveOrder(order);
@@ -158,6 +172,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
                     // 锁成功了
                     submitOrderResponseVo.setCode(0);
                     submitOrderResponseVo.setOrder(order.getOrder());
+                    rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order", order.getOrder());
                     return submitOrderResponseVo;
                 } else {
                     // 锁失败了
@@ -187,8 +202,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderEntity order = orderCreateTo.getOrder();
         order.setModifyTime(new Date());
         order.setCreateTime(new Date());
-        // 默认失败用于测试
-        order.setStatus(4);
+        // 待支付
+        order.setStatus(0);
         //保存订单
         this.baseMapper.insert(order);
 
